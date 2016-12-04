@@ -9,7 +9,10 @@ class QuestionResultController:
     
     @staticmethod
     def show(request, question_id):
-        return HttpResponse(Template.RESULT.render(request))
+        question = get_object_or_404(Question, pk=question_id)
+        return HttpResponse(Template.RESULT.render(
+            ContextUtils.put_context(question=question), 
+            request))
 
 
 
