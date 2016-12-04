@@ -9,9 +9,8 @@ class DashboardController(object):
     
     @staticmethod
     def index(request):
-        latest_question_list = Question.objects.order_by('-pub_date')
         return HttpResponse(Template.DASHBOARD.render(
-            ContextUtils.put_context(dashboardVOs=latest_question_list), 
+            ContextUtils.put_context(dashboardVOs=Question.get_publisheds()), 
             request))
 
 
