@@ -1,0 +1,17 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Polls</title>
+        <link rel="stylesheet" href="{% static 'css/libs/materialize.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/libs/icon.css' %}">
+        <link rel="stylesheet" href="{% static 'css/index/index.css' %}">
+    </head>
+    <body>
+        {% include "polls/includes/menu.html" %}
+        <div class="container">
+            {% block content %}
+            {% endblock %}             
+        </div>
+    </body>
+    {% include "polls/includes/footer.html" %}
+</html>

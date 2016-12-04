@@ -1,0 +1,24 @@
+ul {
+    list-style: none;
+}
+
+nav {
+    background-color: #455A64;
+}
+
+footer.polls-footer.page-footer {
+    background-color: #455A64;
+}
+
+.polls-footer a {
+    color: #fff;
+}
+
+.polls-footer i {
+    padding-left: 5px;
+}
+
+.left-padd.brand-logo {
+    padding-left: 20px;
+    font-size: 24px;
+}
