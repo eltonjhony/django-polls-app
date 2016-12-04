@@ -8,6 +8,10 @@ nav {
 
 footer.polls-footer.page-footer {
     background-color: #455A64;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
 }
 
 .polls-footer a {
@@ -21,4 +25,8 @@ footer.polls-footer.page-footer {
 .left-padd.brand-logo {
     padding-left: 20px;
     font-size: 24px;
+}
+
+.white-icon {
+    color: #fff;
 }

@@ -1,0 +1,21 @@
+{% extends 'polls/index.html' %}
+
+{% block content %}
+    <h5>{{ question.question_text }}</h5>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    {% if question.choice_set.all %}
+        <form action="{% url 'polls:vote' question.id %}" method="post">
+            {% csrf_token %}
+            {% for choice in question.choice_set.all %}
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+            {% endfor %}
+            <button class="btn waves-effect waves-light" type="submit" name="action">Vote
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+    {% else %}
+        <p>No choices are available.</p>
+    {% endif %}  
+{% endblock content %}
