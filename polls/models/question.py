@@ -22,8 +22,6 @@ class Question(models.Model):
         Return all the published questions (not including those set to be
         published in the future).
         """
-        latest_question_list = Question.objects.filter(
+        return Question.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')
-
-        return latest_question_list
