@@ -1,19 +1,8 @@
-import datetime
-
 from django.test import TestCase
-from django.utils import timezone
 from django.urls import reverse
 
 from polls.models import Question
-
-def create_question(question_text, days):
-        """
-        Creates a question with the given `question_text` and published the
-        given number of `days` offset to now (negative for questions published
-        in the past, positive for questions that have yet to be published).
-        """
-        time = timezone.now() + datetime.timedelta(days=days)
-        return Question.objects.create(question_text=question_text, pub_date=time)
+from tests_utils import TestsUtils
 
 class DashboardControllerTest(TestCase):
 
@@ -31,7 +20,7 @@ class DashboardControllerTest(TestCase):
         Questions with a pub_date in the past should be displayed on the
         dashboard page.
         """
-        create_question(question_text="Past question.", days=-30)
+        TestsUtils.create_question(question_text="Past question.", days=-30)
         response = self.client.get(reverse("polls:dashboard"))
         self.assertQuerysetEqual(
             response.context['dashboardVOs'], ['<Question: Past question.>']
@@ -42,7 +31,7 @@ class DashboardControllerTest(TestCase):
         Questions with a pub_date in the future should not be displayed on
         the dashboard page.
         """
-        create_question(question_text="Future question.", days=30)
+        TestsUtils.create_question(question_text="Future question.", days=30)
         response = self.client.get(reverse("polls:dashboard"))
         self.assertContains(response, "No polls are available.")
         self.assertQuerysetEqual(response.context['dashboardVOs'], [])
@@ -52,8 +41,8 @@ class DashboardControllerTest(TestCase):
         Even if both past and future questions exist, only past questions
         should be displayed.
         """
-        create_question(question_text="Past question.", days=-30)
-        create_question(question_text="Future question.", days=30)
+        TestsUtils.create_question(question_text="Past question.", days=-30)
+        TestsUtils.create_question(question_text="Future question.", days=30)
         response = self.client.get(reverse("polls:dashboard"))
         self.assertQuerysetEqual(
             response.context['dashboardVOs'], ['<Question: Past question.>']
@@ -63,8 +52,8 @@ class DashboardControllerTest(TestCase):
         """
         The questions dashboard page may display multiple questions.
         """
-        create_question(question_text="Past question.", days=-30)
-        create_question(question_text="Past question again.", days=-20)
+        TestsUtils.create_question(question_text="Past question.", days=-30)
+        TestsUtils.create_question(question_text="Past question again.", days=-20)
         response = self.client.get(reverse("polls:dashboard"))
         self.assertQuerysetEqual(
             response.context['dashboardVOs'], 
